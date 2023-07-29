@@ -20,7 +20,7 @@ void taskIMU(void *pvParameters) {
   struct angleData IMUData;
 
   /* Task timing */
-  const TickType_t xFrequency = configTICK_RATE_HZ / IMU_SAMPLING_FREQUENCY_DMP;
+  const TickType_t xFrequency = configTICK_RATE_HZ / IMU_SAMPLING_FREQUENCY;
   TickType_t xLastWakeTime = xTaskGetTickCount();
 
   /* Main loop */
