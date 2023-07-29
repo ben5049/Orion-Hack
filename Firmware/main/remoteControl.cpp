@@ -47,12 +47,24 @@ void taskRemoteControl(void *pvParameters) {
 
     Dabble.processInput();
 
-    angle = GamePad.getAngle();
+//    angle = GamePad.getAngle();
 
-    Serial.println(angle);
+//    Serial.println(angle);
 
-    val = map(angle, 0, 360, -180, 180);     // scale it to use it with the servo (value between 0 and 180)
-    myservo.write(val);
+//    val = map(angle, 0, 360, -180, 180);     // scale it to use it with the servo (value between 0 and 180)
+//    myservo.write(val);
 
+  if (GamePad.isUpPressed())
+  {
+    myservo.write(180);
+  }
+
+
+  if (GamePad.isDownPressed())
+  {
+    myservo.write(-180);
+  }
+  
+  
   }
 }
