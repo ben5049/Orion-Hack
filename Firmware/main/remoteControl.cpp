@@ -19,10 +19,11 @@ void taskRemoteControl(void *pvParameters) {
   (void)pvParameters;
 
   static bool initialised = false;
-  Servo myservo;
-  int val;    // variable to read the value from the analog pin
 
-
+  Servo myservo1;
+  Servo myservo2;
+  Servo myservo3;
+  
   /* Task timing */
   const TickType_t xFrequency = configTICK_RATE_HZ / REMOTE_CONTROL_FREQUENCY;
   TickType_t xLastWakeTime = xTaskGetTickCount();
@@ -40,31 +41,50 @@ void taskRemoteControl(void *pvParameters) {
       ESP32PWM::allocateTimer(1);
       ESP32PWM::allocateTimer(2);
       ESP32PWM::allocateTimer(3);
-      myservo.setPeriodHertz(50);
-      myservo.attach(SERVO_PIN, 500, 2400);
+      myservo1.setPeriodHertz(50);
+      myservo1.attach(SERVO_PIN1, 500, 2400);
+      myservo1.write(90);
+//      myservo2.setPeriodHertz(50);
+//      myservo2.attach(SERVO_PIN2, 500, 2400);
+//      myservo2.write(90);
+//      myservo3.setPeriodHertz(50);
+//      myservo3.attach(SERVO_PIN3, 500, 2400);
+//      myservo3.write(90);
       initialised = true;
     }
 
-    Dabble.processInput();
+      Dabble.processInput();
 
-//    angle = GamePad.getAngle();
+      angle = GamePad.getAngle();
 
-//    Serial.println(angle);
+      Serial.println(angle);
+      if ((0 < angle) && (angle < 120)) {
+        myservo1.write(0);
+      }
+      else {
+        myservo1.write(20);
+      }
 
-//    val = map(angle, 0, 360, -180, 180);     // scale it to use it with the servo (value between 0 and 180)
-//    myservo.write(val);
+      if (120 <= angle && angle < 240) {
+        myservo2.write(0);
+      }
+      else {
+        myservo2.write(90);
+      }
 
-  if (GamePad.isUpPressed())
-  {
-    myservo.write(180);
-  }
+      if (240 <= angle && angle <= 360) {
+        myservo3.write(0);
+      }
+      else {
+        myservo3.write(90);
+      }
 
 
-  if (GamePad.isDownPressed())
-  {
-    myservo.write(-180);
-  }
-  
-  
+      //      val = map(angle, 0, 360, -180, 180);     // scale it to use it with the servo (value between 0 and 180)
+      //      myservo1.write(val);
+
+
+
+    
   }
 }
